@@ -1,6 +1,7 @@
 'use client'
 
 import Modal from '@/components/modal';
+import Input from '@/components/form/input';
 import { createUser } from '@/app/_actions/signup'
 import { useActionState } from 'react';
 
@@ -8,45 +9,17 @@ import { useActionState } from 'react';
 export default function SignUp({ open, setOpen }) {
     const [state, formAction] = useActionState(createUser, {});
 
+    console.log(state.form)
     return (
         <Modal open={open} setOpen={setOpen} onSubmit={formAction}>
             <h2 className="mb-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
                 Sign in to your account
             </h2>
             <form action={formAction} className="space-y-6">
-                <div>
-                    <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">Name</label>
-                    <div className="mt-2">
-                        <input type="text" name="name" id="name"
-                            defaultValue={state.form?.name}
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="Your name" />
-                            {state.errors?.name && (
-                                <p className="text-red-500">{state.errors.name}</p>
-                            )}
-                    </div>
-                </div>
-                <div>
-                    <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">Email</label>
-                    <div className="mt-2">
-                        <input type="email" name="email" id="email"
-                            defaultValue={state.form?.email}
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="you@example.com" />
-                            {state.errors?.email && (
-                                <p className="text-red-500">{state.errors.email}</p>
-                            )}
-                    </div>
-                </div>
-                <div>
-                    <label htmlFor="phone" className="block text-sm/6 font-medium text-gray-900">Phone</label>
-                    <div className="mt-2">
-                        <input type="text" name="phone" id="phone"
-                            defaultValue={state.form?.phone}
-                            className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6" placeholder="55 5555-5555" />
-                            {state.errors?.phone && (
-                                <p className="text-red-500">{state.errors.phone}</p>
-                            )}
-                    </div>
-                </div>
+                <Input name="name" defaultValue={state.form?.name} errors={state.errors?.name} placeholder="Your name" />
+                <Input name="email" type="email" defaultValue={state.form?.email} errors={state.errors?.email} placeholder="you@mail.com" />
+                <Input name="phone" defaultValue={state.form?.phone} errors={state.errors?.phone} placeholder="55 5555-5555" />
+
                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                     <button
                         type="submit"
